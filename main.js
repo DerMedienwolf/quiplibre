@@ -74,16 +74,15 @@ function createWindow() {
   const height = screenHeight - space * 2;
 
   gameWindow = new BrowserWindow({
-    fullscreen: true,
+    // setting to true doesn't work in Windows
+    // https://github.com/electron/electron/issues/6036
+    // fullscreen: false,
     fullscreenable: true,
     defaultEncoding: "utf8",
     x: x,
     y: y,
     width: width,
     height: height,
-    title: "Quiplibre",
-    autoHideMenuBar: true,
-    icon: "favicon.png",
   });
 
   const settings = {
@@ -107,8 +106,8 @@ function createWindow() {
   webContents.on('will-navigate', handleRedirect);
   webContents.on('new-window', handleRedirect);
   webContents.on('dom-ready', () => {
-    if (isDevMode) {
-      gameWindow.setFullScreen(false);
+    if (!isDevMode) {
+      gameWindow.setFullScreen(true);
     }
   });
 }
@@ -187,3 +186,4 @@ function setupMenus() {
   const menu = electron.Menu.buildFromTemplate(menuTemplate);
   electron.Menu.setApplicationMenu(menu);
 }
+
