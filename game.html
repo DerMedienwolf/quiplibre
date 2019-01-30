@@ -62,7 +62,7 @@ server.on('playerconnect', function(netPlayer){
 	}
 	if (players.length >= 3) {
 		document.getElementById("startButton").removeAttribute("disabled");
-		document.getElementById("startButton").removeClass("disabled");
+		document.getElementById("startButton").classList.remove("disabled");
 	}
 });
 
