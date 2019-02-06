@@ -8,9 +8,10 @@
 <body>
 <div id="prevDiv"></div>
 <div id="playDiv">
-	Hi!</br> Willkommen zu Quiplibre! </br>
-	Verbinde Dich mit einem lokalen WLAN und logge Dich auf happyfuntimes.net ein.</br>
-	Noch keine Spielenden online.</br></div>
+	</br></br>
+	Willkommen zu Quiplibre! </br></br>
+	Verbinde Dich mit einem lokalen WLAN und logge Dich auf happyfuntimes.net ein.</br></br>
+	Noch keine Spielenden online.</br></br></div>
 <div id="buttonDiv"><button id="startButton" onClick="nextRound()">Spiel starten</button></div>
 </body>
 <script src="prompts.json"></script><!-- Databases are for suckers -->
@@ -19,7 +20,7 @@ const happyfuntimes = require('happyfuntimes');
 
 const server = new happyfuntimes.GameServer();
 
-attr = '<div id="attrDiv"><i>Quiplibre ist freie software, unter <a href="LICENSE.txt">AGPL v3+</a>. Der Sourcecode ist <a href="https://github.com/wyattscarpenter/quiplibre">hier</a> verfügbar.</i></div>'
+attr = '<div id="attrDiv"><i>Quiplibre ist freie Software, unter <a href="LICENSE.txt">AGPL v3+</a>. Der Sourcecode ist <a href="https://github.com/wyattscarpenter/quiplibre">hier</a> verfügbar.</i></div>'
 prevDiv.innerHTML = attr;
 // A new player has arrived.
 server.on('playerconnect', function(netPlayer) {
@@ -121,7 +122,7 @@ class Player {
 			console.log("ignoring choice as player state is "+this.state);
 		} else {
 			votes[cmd.index]++;
-			this.netPlayer.sendCmd("displayMessage","<p>You voted for option "+(cmd.index+1)+".</p>")
+			this.netPlayer.sendCmd("displayMessage","<p>Du hast für "+(cmd.index+1)+" gestimmt.</p>")
 			this.state = "rest";
 			if(votes[0]+votes[1] == players.length){
 				awardPoints();
@@ -135,8 +136,8 @@ Player.prototype.toString = function(){return this.name};
 //game logic fns
 function nextRound(){
 	if (players.length <= 1){
-		display("You need at least two people to connect "+
-			"in order to play Quiplibre."
+		display("Du brauchst mindestens zwei Menschen, "+
+			"um Quiplibre zu spielen."
 		);
 	} else {
 		gameBegun = true;
@@ -159,7 +160,7 @@ function nextRound(){
 				players[i].state = "prompt0";
 			}
 
-			display("<p>Time for a nice round of Quiplibre! Round "+round+", to be exact!</p>");
+			display("<p>Zeit für eine neue Runde Quiplibre!</br></br>"+"Runde "+round+"!</p>");
 			buttonDiv.innerHTML = "";
 		}else{
 			endGame();
@@ -187,9 +188,9 @@ function progressJudgement(){
 }
 
 function awardPoints(){
-	var scoreStr = "Previous result:<br>";
+	var scoreStr = "Aktueller Punktestand:<br>";
 	for(var i = 0; i<votes.length;i++){
-		scoreStr = scoreStr.concat(pp[i].name+" won "+votes[i]+" votes and thus "+computeScore(i)+" points!<br>");
+		scoreStr = scoreStr.concat(pp[i].name+" hat "+votes[i]+" Stimmen und "+computeScore(i)+" Punkte!<br>");
 		pp[i].score += computeScore(i);
 		pp[i].netPlayer.sendCmd("updateScore", pp[i].score);
 	}
@@ -198,12 +199,12 @@ function awardPoints(){
 
 function endGame(){
 	sortPlayers();
-		display("<p>End of the game! Here's a scoreboard:</p>"+
+		display("<p>Spielende! Und hier ist der Punktestand:</p>"+
 			players.reduce(function f(acc, p){
 				return acc+p.name+": "+p.score+"<br>";
 			}, "")+
-			"<br><button onclick=\"newGame()\" value>New Game with Same Players</button>"+
-			"<br><button onclick=\"location.reload()\" value>New Game with New Players</button>"+
+			"<br><button onclick=\"newGame()\" value>Neues Spiel mit gleichen Spieler*innen?</button>"+
+			"<br><button onclick=\"location.reload()\" value>Neues Spiel mit neuen Spieler*innen?</button>"+
 			"<br><a href=\"https://github.com/wyattscarpenter/quiplibre\">"+
 				"Submit prompts or improvements at Github"+
 			"</a>"
@@ -213,7 +214,7 @@ function endGame(){
 }
 
 function newGame(){
-	prevDiv.innerHTML = "Previous winner: "+players[0];
+	prevDiv.innerHTML = "Letzte*r Gewinner*in: "+players[0];
 	round = 0;
 	allPlayers(function f(p){
 		p.score=0;

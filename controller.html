@@ -4,15 +4,16 @@
 	<meta charset="utf-8">
 	<title>Quiplibre</title>
 	<link rel="icon" href="favicon.png" type="image/png">
+	<link rel="stylesheet" href="custom.css">
 </head>
 <body>
 <h1>Quiplibre</h1>
 <div id="nameDiv"></div><div id="pointsDiv"></div>
 <div id="playDiv">
-		<p>Connecting to server...</p>
+		<p>Connect the system, Crystal...</p>
 </div>
 <form id="form" onSubmit="sendAnswer()" target="playDiv" formaction="#" style="visibility: hidden">
-		<input id="inputBox"></input><input type="submit" value="Submit"></input>
+		<input id="inputBox"></input><input id="submit" type="submit" value="OK"></input>
 </form>
 </body>
 <script src="/node_modules/happyfuntimes/dist/hft.js"></script>
@@ -50,11 +51,11 @@ function clearInputBox(){
 }
 
 function handleConnect() {
-	display("<p>Connected to server...</p>");
+	display("<p>Crystal: System connected.</p>");
 }
 
 function handleDisconnect() {
-	display("<p>Disconnected.</p>");
+	display("<p>Crystal: System disconnected.</p>");
 }
 
 function handleDisplayPrompt(prompt) {
@@ -71,7 +72,7 @@ function handleUpdateName(name) {
 }
 
 function handleUpdateScore(score) {
-	pointsDiv.innerHTML = "Points: " + score;
+	pointsDiv.innerHTML = "Punkte: " + score;
 }
 
 function handleDisplayChoice(choices){
